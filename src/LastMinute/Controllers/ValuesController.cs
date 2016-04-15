@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 
-using LastMinute.Models;
-
 namespace LastMinute.Controllers
 {
     [Route("api/[controller]")]
