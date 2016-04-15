@@ -8,5 +8,7 @@ namespace LastMinute.Services
         
         void Patch(string id, JObject patchDocument);
         JObject Get(string id);   
+        
+        void Delete(string id);
     }
 }

@@ -2,6 +2,7 @@ using Xunit;
 using Newtonsoft.Json.Linq;
 
 using LastMinute.Services;
+using LastMinute.Exceptions;
 
 namespace LastMinute.Tests
 {
@@ -35,5 +36,28 @@ namespace LastMinute.Tests
 			Assert.Equal(id, response["id"]);
 			Assert.Equal(injury, response["injury"]);
 		}
-	}
+		
+		[Fact]
+		public void GettingAnIdNotPresentThrowsAnException()
+		{
+			// arrange
+			ILastMinuteService sut = new LastMinuteService();
+			string id = "jack";
+			string injury = "broken crown";
+			JObject document = new JObject {
+				{"id", id}, 
+				{"injury", injury}
+			};
+			sut.Create(document);
+			
+			// act
+			sut.Delete(id);
+			
+			// assert
+			DocumentNotFoundException ex = Assert.Throws<DocumentNotFoundException>(() => sut.Get(id));
+
+			string expectedMessage = string.Format("Document with id [{0}] was not found.", id);
+			Assert.Equal(expectedMessage, ex.Message);
+		}
+	}		
 }

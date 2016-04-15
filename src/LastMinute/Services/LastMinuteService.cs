@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System;
 
+using LastMinute.Exceptions;
 using LastMinute.Models;
 
 namespace LastMinute.Services
@@ -34,7 +35,17 @@ namespace LastMinute.Services
                 }
             }
             
+            if ( result == null )
+            {
+                throw new DocumentNotFoundException(id);
+            }
+            
             return result;
+        }
+        
+        public void Delete(string id)
+        {
+            _events.Enqueue(new DeleteEvent(id));
         }
         
         private JObject mergeEvent(JObject document, IEvent e)
@@ -44,10 +55,14 @@ namespace LastMinute.Services
                 CreateEvent createEvent = (CreateEvent) e;
                 return createEvent.Document;    
             } 
-            else if ( e is PatchEvent)
+            else if ( e is PatchEvent )
             {
                 PatchEvent patchEvent = (PatchEvent) e;
                 return patchDocument(document, patchEvent.Document);
+            }
+            else if ( e is DeleteEvent )
+            {
+                return null;
             }
             else
             {
