@@ -9,22 +9,48 @@ namespace LastMinute.Services
 {
     public class LastMinuteService : ILastMinuteService
     {
-        private readonly Queue<IEvent> _events = new Queue<IEvent>();
+        private Queue<IEvent> _events;
         
         private const string _ID_ = "id";
         
+        private readonly IPersister _persister;
+        
+        public LastMinuteService()
+        {
+            _persister = new BasicPersister();
+        }
+        public LastMinuteService(IPersister persister)
+        {
+            _persister = persister;
+        }
+        
         public void Create(JObject document)
         {
-            _events.Enqueue(new CreateEvent(document[_ID_].Value<string>(), document));
+            var e = new CreateEvent(document[_ID_].Value<string>(), document);
+            _persister.Append(e);
+            if ( _events != null )
+            {
+                _events.Enqueue(e);
+            }
         }
         
         public void Patch(string id, JObject patchDocument)
         {
-            _events.Enqueue(new PatchEvent(id, patchDocument));
+            var e = new PatchEvent(id, patchDocument);
+            _persister.Append(e);
+            if ( _events != null )
+            {
+                _events.Enqueue(e);
+            }
         }
         
         public JObject Get(string id)
         {
+            if ( _events == null )
+            {
+                _events = new Queue<IEvent>(_persister.Load());
+            }
+            
             JObject result = null;
             
             foreach ( IEvent e in _events )
@@ -45,7 +71,12 @@ namespace LastMinute.Services
         
         public void Delete(string id)
         {
-            _events.Enqueue(new DeleteEvent(id));
+            var e = new DeleteEvent(id);
+            _persister.Append(e);
+            if ( _events != null )
+            {
+                _events.Enqueue(e);
+            }
         }
         
         private JObject mergeEvent(JObject document, IEvent e)

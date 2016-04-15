@@ -10,5 +10,6 @@ namespace LastMinute.Services
         JObject Get(string id);   
         
         void Delete(string id);
+        
     }
 }
