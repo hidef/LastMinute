@@ -9,7 +9,7 @@ namespace LastMinute.Tests.Controller
     public class DataControllerDeletionTests 
     {
         [Fact]
-        public void WhenADocumentExistsOKIsReturned() 
+        public void OKIsReturned() 
         {
             ILastMinuteService service = Substitute.For<ILastMinuteService>();
             DataController controller = new DataController(service);
@@ -20,7 +20,7 @@ namespace LastMinute.Tests.Controller
         }
         
         [Fact]
-        public void TheDocumentIsDeletedFromTheService() 
+        public void TheDeleteIsInvokedOnTheService() 
         {
             ILastMinuteService service = Substitute.For<ILastMinuteService>();
 
