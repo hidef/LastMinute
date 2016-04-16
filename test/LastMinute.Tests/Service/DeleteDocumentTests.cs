@@ -2,11 +2,13 @@ using Xunit;
 using Newtonsoft.Json.Linq;
 
 using LastMinute.Services;
+using LastMinute.Exceptions;
 
 namespace LastMinute.Tests.Service
 {
 	public class DeleteDocumentTests
 	{
+		
 		[Fact]
 		public void DocumentsCanBeDeletedById() 
 		{
@@ -24,11 +26,7 @@ namespace LastMinute.Tests.Service
 			sut.Delete(id);
 			
 			// assert
-			JObject response = sut.Get(id);
-			
-			Assert.NotNull(response);
-			Assert.Equal(id, response["id"]);
-			Assert.Equal(injury, response["injury"]);
+			DocumentNotFoundException ex = Assert.Throws<DocumentNotFoundException>(() => sut.Get(id));
 		}
 		
 		[Fact]
@@ -49,13 +47,7 @@ namespace LastMinute.Tests.Service
 			sut.Delete(id);
 			
 			// assert
-			JObject response = sut.Get(id);
-			
-			Assert.NotNull(response);
-			Assert.Equal(id, response["id"]);
-			Assert.Equal(injury, response["injury"]);
+			DocumentNotFoundException ex = Assert.Throws<DocumentNotFoundException>(() => sut.Get(id));
 		}
 	}
-}
-}
 }
