@@ -5,7 +5,7 @@ using LastMinute.Services;
 
 namespace LastMinute.Tests
 {
-	public class UpdateDocumentTests
+	public class Tests.Service
 	{
 		[Fact]
 		public void ADocumentCanBeUpdatedById() 

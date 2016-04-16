@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using LastMinute.Services;
 using LastMinute.Exceptions;
 
-namespace LastMinute.Tests
+namespace LastMinute.Tests.Service
 {
 	public class GetDocumentTests
 	{

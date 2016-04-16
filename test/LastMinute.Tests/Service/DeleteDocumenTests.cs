@@ -3,12 +3,12 @@ using Newtonsoft.Json.Linq;
 
 using LastMinute.Services;
 
-namespace LastMinute.Tests
+namespace LastMinute.Tests.Service
 {
-	public class CreateDocumentsTests
+	public class DeleteDocumentTests
 	{
 		[Fact]
-		public void ANewDocumentIsAdded() 
+		public void DocumentsCanBeDeletedById() 
 		{
 			// arrange
 			ILastMinuteService sut = new LastMinuteService();
@@ -18,9 +18,15 @@ namespace LastMinute.Tests
 				{"id", id}, 
 				{"injury", injury}
 			};
+			
+			JObject document2 = new JObject {
+				{"id", "jill"}, 
+				{"injury", "unspecified"}
+			};
 		
 			// act
-			sut.Create(document);	
+			sut.Create(document);
+			sut.Create(document2);	
 			
 			// assert
 			JObject response = sut.Get(id);

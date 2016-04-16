@@ -6,7 +6,7 @@ using NSubstitute;
 using LastMinute.Models;
 using System.Collections.Generic;
 
-namespace LastMinute.Tests
+namespace LastMinute.Tests.Service
 {
 	public class PersistenceTests
 	{
