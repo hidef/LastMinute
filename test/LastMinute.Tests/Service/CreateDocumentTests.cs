@@ -29,5 +29,29 @@ namespace LastMinute.Tests.Service
 			Assert.Equal(id, response["id"]);
 			Assert.Equal(injury, response["injury"]);
 		}
+		
+		[Fact]
+		public void AddOperationsAreIdempotent() 
+		{
+			// arrange
+			ILastMinuteService sut = new LastMinuteService();
+			string id = "jack";
+			string injury = "broken crown";
+			JObject document = new JObject {
+				{"id", id}, 
+				{"injury", injury}
+			};
+		
+			// act
+			sut.Create(document);	
+			sut.Create(document);	
+			
+			// assert
+			JObject response = sut.Get(id);
+			
+			Assert.NotNull(response);
+			Assert.Equal(id, response["id"]);
+			Assert.Equal(injury, response["injury"]);
+		}
 	}
 }
