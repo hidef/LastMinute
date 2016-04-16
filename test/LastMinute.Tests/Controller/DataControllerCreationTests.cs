@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace LastMinute.Tests.Controller
 {
-    public class DataControllerTests 
+    public class DataControllerCreationTests 
     {
         [Fact]
         public void GettingAMissingDocumentReturnsA404() 
