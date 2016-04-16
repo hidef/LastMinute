@@ -3,9 +3,9 @@ using Newtonsoft.Json.Linq;
 
 using LastMinute.Services;
 
-namespace LastMinute.Tests
+namespace LastMinute.Tests.Service
 {
-	public class Tests.Service
+	public class UpdateDocumentTests
 	{
 		[Fact]
 		public void ADocumentCanBeUpdatedById() 
