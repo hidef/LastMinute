@@ -18,15 +18,35 @@ namespace LastMinute.Tests.Service
 				{"id", id}, 
 				{"injury", injury}
 			};
-			
-			JObject document2 = new JObject {
-				{"id", "jill"}, 
-				{"injury", "unspecified"}
-			};
-		
-			// act
 			sut.Create(document);
-			sut.Create(document2);	
+			
+			// act
+			sut.Delete(id);
+			
+			// assert
+			JObject response = sut.Get(id);
+			
+			Assert.NotNull(response);
+			Assert.Equal(id, response["id"]);
+			Assert.Equal(injury, response["injury"]);
+		}
+		
+		[Fact]
+		public void DeleteOperationsAreIdempotent() 
+		{
+			// arrange
+			ILastMinuteService sut = new LastMinuteService();
+			string id = "jack";
+			string injury = "broken crown";
+			JObject document = new JObject {
+				{"id", id}, 
+				{"injury", injury}
+			};
+			sut.Create(document);
+			
+			// act
+			sut.Delete(id);
+			sut.Delete(id);
 			
 			// assert
 			JObject response = sut.Get(id);
@@ -36,4 +56,6 @@ namespace LastMinute.Tests.Service
 			Assert.Equal(injury, response["injury"]);
 		}
 	}
+}
+}
 }
