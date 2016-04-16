@@ -32,11 +32,13 @@ namespace LastMinute.Controllers
         }
 
         // Boilerplate examples - How to do webapi
-        // // POST api/values
-        // [HttpPost]
-        // public void Post([FromBody]string value)
-        // {
-        // }
+        // POST api/values
+        [HttpPost]
+        public IActionResult Post([FromBody]JObject document)
+        {
+            _service.Create(document);
+            return Ok();
+        }
 
         // // PUT api/values/5
         // [HttpPut("{id}")]
