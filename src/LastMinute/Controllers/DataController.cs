@@ -40,11 +40,13 @@ namespace LastMinute.Controllers
             return Ok();
         }
 
-        // // PUT api/values/5
-        // [HttpPut("{id}")]
-        // public void Put(int id, [FromBody]string value)
-        // {
-        // }
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public IActionResult Put(string id, [FromBody]JObject document)
+        {
+            _service.Patch(id, document);
+            return Ok();
+        }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
